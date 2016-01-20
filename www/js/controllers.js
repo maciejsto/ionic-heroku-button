@@ -94,7 +94,10 @@ function ToggleLight(type){
   if (null == type || 0 == type.length) return
   
   return {
-    type:type
+    
+    type:type,
+    
+    
   }
 };
 
