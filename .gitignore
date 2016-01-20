@@ -1,2 +1,4 @@
+bower_components/
+www/lib/
 node_modules/
 .*.sw*

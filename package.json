@@ -4,6 +4,12 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "~4.4.3"
-  }
+    "express": "~4.4.3",
+    "mqtt": "^1.6.3",
+    "url": "^0.11.0"
+  },
+  "cordovaPlugins": [],
+  "cordovaPlatforms": [
+    "android"
+  ]
 }

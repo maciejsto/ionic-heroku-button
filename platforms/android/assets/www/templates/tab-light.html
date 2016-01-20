@@ -1,0 +1,21 @@
+<ion-view title="Light Control" ng-controller="lightControlCtrl">
+    <ion-content padding="'true'" class="has-header has-footer">
+        <form class="list">
+            <ion-toggle toggle-class="toggle-positive" ng-model="hallModel" ng-click="toggleHall()">Hall</ion-toggle>
+            <ion-item class="range range-positive">Range
+                <input type="range" value="50" min="0" max="255" name="Hall Light Intensity"  ng-model="qty.qty" ng-change="rangeSlider()">
+            </ion-item>
+            <ion-toggle toggle-class="toggle-positive">Kitchen</ion-toggle>
+            <ion-toggle toggle-class="toggle-positive">Bedroom</ion-toggle>
+            <ion-toggle toggle-class="toggle-positive">Livingroom</ion-toggle>
+            <ion-toggle toggle-class="toggle-positive">Bathroom</ion-toggle>
+        </form>
+        <a menu-close="" href="#/page2" class="button button-stable button-block  icon-right ion-ios-arrow-thin-left">back</a>
+        <ion-list>
+            <label class="item item-select">
+                <span class="input-label">Select</span>
+                <select></select>
+            </label>
+        </ion-list>
+    </ion-content>
+</ion-view>
