@@ -27,29 +27,37 @@ app.all('*', function(req, res, next) {
 app.set('port', process.env.PORT || 5000);
 
 
-// MQTT
-// Parse 
-var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
-var auth = (mqtt_url.auth || ':').split(':');
+// // MQTT
+// // Parse 
+// var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
+// var client = mqtt.connect('mqtt://unnrixva:xmcM9mRlT34Y@m20.cloudmqtt.com:33512');
 
-// Create a client connection
-var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
-  username: auth[0],
-  password: auth[1] 
-});
+// var humidity = 0;
+// client.on('connect', function() {
+    // console.log('client connected');
+// publish a message to a topic: home/flowerpot/humidity
+    // client.publish('home/flowerpot/humidity', humidity, function() {
+    // client.end(); // you can close the connection when published
+    // });
+// });
+// var auth = (mqtt_url.auth || ':').split(':');
+
+// // Create a client connection
+var client = mqtt.connect('mqtt://unnrixva:xmcM9mRlT34Y@m20.cloudmqtt.com:13512');
 
 client.on('connect', function() { // When connected
-
-  // subscribe to a topic
-  client.subscribe('hello/world', function() {
-    // when a message arrives, do something with it
+    console.log('connected');
+//   // subscribe to a topic
+  client.subscribe('home/config', function() {
+//     // when a message arrives, do something with it
     client.on('message', function(topic, message, packet) {
       console.log("Received '" + message + "' on '" + topic + "'");
+      
     });
   });
 
   // publish a message to a topic
-  client.publish('hello/world', 'my message', function() {
+  client.publish('home/config', 'my message', function() {
     console.log("Message is published");
     client.end(); // Close the connection when published
   });
@@ -58,20 +66,60 @@ client.on('connect', function() { // When connected
 
 
 io.on('connection', function (socket) {
+    
     console.log('client connected!'); 
     socket.on('message', function(data){
         console.log(data);
     });
+    //1 Hall
     socket.on('LightHall', function(data){
         console.log(data);
     });
-    socket.on('slider', function(data){
-        console.log(data);
-    });
+    //2 Kitchen
     socket.on('LightKitchen', function(data){
         console.log(data);
     });
+    //3 BedRoom
+    socket.on('LightBedRoom', function(data){
+        console.log(data);
+    });
+    //4 LivingRoom
+    socket.on('LightLivingRoom', function(data){
+        console.log(data);
+    });
+    //5 BathRoom
+    socket.on('LightBathRoom', function(data){
+        console.log(data);
+    });
+    
+    //1
+    socket.on('hallSlider', function(data){
+        console.log(data);
+        // console.log(data.name + ' '+  data.value);
+    });
+    //2
+    socket.on('kitchenSlider', function(data){
+        console.log(data);
+        // console.log(data.name + ' ' + data.value);
+    });
+    //3
+    socket.on('bedRoomSlider', function(data){
+        console.log(data);
+        // console.log(data.name + ' ' + data.value);
+    });
+    //4
+    socket.on('livingRoomSlider', function(data){
+        console.log(data);
+        // console.log(data.name + ' ' + data.value);
+    });
+    //5
+    socket.on('bathRoomSlider', function(data){
+        console.log(data);
+        // console.log(data.name + ' ' + data.value);
+    });
 });
+
+
 
 server.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

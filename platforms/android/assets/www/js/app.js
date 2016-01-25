@@ -92,3 +92,4 @@ var app = angular.module('starter', ['ionic', 'ngSanitize','starter.controllers'
 
 });
 
+

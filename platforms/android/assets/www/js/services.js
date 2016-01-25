@@ -23,7 +23,7 @@ angular.module('starter.services', [])
       return friends[friendId];
     }
   }
-}).factory('Socket', function($rootScope) {
+}).factory('MqttSocket', function($rootScope) {
 
     var service = {};
     var client = {};
@@ -57,6 +57,7 @@ angular.module('starter.services', [])
     }
 
     return service;
+    
 }).factory('Sockets', function($http, socketFactory){
 
   var myIoSocket = io.connect();
