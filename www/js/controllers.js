@@ -56,6 +56,7 @@ angular.module('starter.controllers', [])
          }else{
              $scope.hallModel = false
          }
+         
         Sockets.emit('LightHall', {
             name: "Hall",
             type: "Light",
