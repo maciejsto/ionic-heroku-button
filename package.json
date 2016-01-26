@@ -8,7 +8,8 @@
     "express": "~4.4.3",
     "mqtt": "^1.6.3",
     "url": "^0.11.0",
-    "socket.io": "*"
+    "socket.io": "*",
+    "angular-socket-io": "*"
   },
   "cordovaPlugins": [],
   "cordovaPlatforms": [
