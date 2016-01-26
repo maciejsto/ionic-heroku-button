@@ -241,5 +241,3 @@ ToggleHall.prototype.toggleButton = function(){
 // }
 
 
-
-class Car {}
