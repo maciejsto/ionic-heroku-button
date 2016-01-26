@@ -1,10 +1,28 @@
 {
   "name": "HelloIonic",
-  "private": "true",
+  "private": true,
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4"
   },
   "dependencies": {
-    "socket.io-client": "~1.4.4"
-  }
+    "angular-socket-io": "~0.7.0",
+    "random": "~1.0.8",
+    "socket.io": "~1.4.4"
+  },
+  "version": "0.0.0",
+  "homepage": "https://github.com/maciejsto/ionic-heroku-button",
+  "authors": [
+    "maciej <maciejsto@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }

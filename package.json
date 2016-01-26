@@ -9,7 +9,8 @@
     "mqtt": "^1.6.3",
     "url": "^0.11.0",
     "socket.io": "*",
-    "angular-socket-io": "*"
+    "angular-socket-io": "*",
+    "bower": "*"
   },
   "cordovaPlugins": [],
   "cordovaPlatforms": [
