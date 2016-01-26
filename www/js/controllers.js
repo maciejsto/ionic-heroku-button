@@ -1,3 +1,4 @@
+'use strict';
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
@@ -29,11 +30,13 @@ angular.module('starter.controllers', [])
     
     var num = 0.0;
     
+    
     $scope.hallModel       = false;
     $scope.kitchenModel    = false;
     $scope.bedRoomModel    = false;
     $scope.livingRoomModel = false;
     $scope.bathRoomModel   = false;
+    
     
     $scope.hallSliderQty       = setQuantity(12);
     $scope.kitchenSliderQty    = setQuantity(30);
@@ -239,4 +242,4 @@ ToggleHall.prototype.toggleButton = function(){
 
 
 
-
+class Car {}
