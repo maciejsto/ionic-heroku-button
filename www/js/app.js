@@ -21,6 +21,7 @@ var app = angular.module('starter', ['ionic', 'ngSanitize','starter.controllers'
   });
 })
 
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
