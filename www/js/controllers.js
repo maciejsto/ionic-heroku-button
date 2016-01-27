@@ -46,8 +46,8 @@ angular.module('starter.controllers', [])
     
     $scope.num = num;
     
-    var toggle = new Toggle('toggle');
-    var toggleHall = new ToggleHall('hall');
+    // var toggle = new Toggle('toggle');
+    // var toggleHall = new ToggleHall('hall');
     
     
     // 1 function executed when toggle hall button is clicked /////////////////////////////////////
@@ -203,27 +203,27 @@ function Quantity(numOfPcs) {
     });
 }
 
-function Toggle(type){
-  if (null == type || 0 == type.length) {
-      console.log('could not create object');
-      return;
-  }
-  this.type = type;
-  this.toString = function(){
-      console.log('toggle type is: ' + this.type);
-  }
+// function Toggle(type){
+//   if (null == type || 0 == type.length) {
+//       console.log('could not create object');
+//       return;
+//   }
+//   this.type = type;
+//   this.toString = function(){
+//       console.log('toggle type is: ' + this.type);
+//   }
   
-};
-Toggle.prototype.toggleButton = function(){
-    console.log('toggle button');
-}
+// };
+// Toggle.prototype.toggleButton = function(){
+//     console.log('toggle button');
+// }
 
-function ToggleHall(name){
-    Toggle.call(this, name);
-}
-ToggleHall.prototype.toggleButton = function(){
-    console.log('toggle hall button');
-}
+// function ToggleHall(name){
+//     Toggle.call(this, name);
+// }
+// ToggleHall.prototype.toggleButton = function(){
+//     console.log('toggle hall button');
+// }
 
 
 
