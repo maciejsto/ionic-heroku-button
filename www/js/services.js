@@ -60,7 +60,7 @@ angular.module('starter.services', [])
     
 }).factory('Sockets', function($http, socketFactory){
 
-  var myIoSocket = io.connect("https://agile-depths-47399.herokuapp.com");
+  var myIoSocket = io.connect();
 
   var mySocket = socketFactory({
     ioSocket: myIoSocket
