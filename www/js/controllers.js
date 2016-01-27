@@ -38,6 +38,9 @@ angular.module('starter.controllers', [])
     $scope.bathRoomModel   = false;
     
     
+    
+    
+    
     $scope.hallSliderQty       = setQuantity(12);
     $scope.kitchenSliderQty    = setQuantity(30);
     $scope.bedRoomSliderQty    = setQuantity(45);
