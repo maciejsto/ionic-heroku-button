@@ -1,7 +1,7 @@
 'use strict';
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope, Sockets) {
     Sockets.emit('message',{data: "hi node server :)"})
     console.log('dash-controller - TODO...')
 })
@@ -11,14 +11,14 @@ angular.module('starter.controllers', [])
   $scope.friends = Friends.all();
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
+.controller('FriendDetailCtrl', function($scope, $stateParams, Friends, Sockets) {
     Sockets.emit('message',{data: "hi node server :)"})
   console.log('friend-cotroller - TODO...')
   $scope.friend = Friends.get($stateParams.friendId);
   
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, Sockets) {
     Sockets.emit('message',{data: "hi node server :)"})
     console.log('account-controller - TODO...')
 })
