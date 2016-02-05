@@ -8,8 +8,25 @@ var express = require('express'),
     mqtt = require('mqtt'), 
     url = require('url');
 
+
+// app.set('domain', process.env.IP);
+    app.set('port', process.env.PORT);
+    // app.use(express.urlencoded());
+    // app.use(express.json());
+    // app.use(express.methodOverride());
+    // app.use(express.compress());
+    // app.use(express.responseTime());
+//    app.use(cors({credentials: false}));
+    app.use(function(req, res, next) {
+        // res.header("Access-Control-Allow-Origin", "http://run.plnkr.co");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.header("Access-Control-Allow-Credentials", true);
+        next();
+    });
 //serve our code
 app.use(express.static('www'));
+
+
 // app.use(express.json());
 // app.use(express.urlencoded());
 //listening on connections
@@ -67,6 +84,12 @@ client.on('connect', function() { // When connected
 
 io.on('connection', function (socket) {
     
+    socket.on("*", function(event, data){
+       console.log("reacting on any event");
+       console.log(event);
+       console.log(data);
+    });
+    
     console.log('client connected!'); 
     socket.on('message', function(data){
         console.log(data);
@@ -121,7 +144,7 @@ io.on('connection', function (socket) {
 
 
 
-server.listen(app.get('port'), function(){
+server.listen(process.env.PORT, process.env.IP, function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
 // app.listen(app.get('port'), function () {
