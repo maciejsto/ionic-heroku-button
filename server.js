@@ -17,10 +17,11 @@ var express = require('express'),
     // app.use(express.compress());
     // app.use(express.responseTime());
 //    app.use(cors({credentials: false}));
-    app.use(function(req, res, next) {
-        // res.header("Access-Control-Allow-Origin", "http://run.plnkr.co");
+app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
-        res.header("Access-Control-Allow-Credentials", true);
+        res.header("Access-Control-Allow-Headers", "Content-Type");
+        res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
         next();
     });
 //serve our code
@@ -81,7 +82,14 @@ client.on('connect', function() { // When connected
 });
 
 
-
+io.set('transports', ['websocket', 
+                      'flashsocket', 
+                      'htmlfile', 
+                      'xhr-polling', 
+                      'jsonp-polling', 
+                      'polling']);
+                      
+                      
 io.on('connection', function (socket) {
     
     socket.on("*", function(event, data){
