@@ -22,8 +22,20 @@ angular.module('starter.controllers', [])
     console.log('account-controller - TODO...')
 })
 
-
-
+.controller('TempCtrl', function($scope, Sockets) {
+    
+    console.log('temp-controller - TODO...')
+    $scope.arduinotemperature = "";
+    $scope.arduinohumidity    = "";
+    $scope.arduinolightsensor = "";
+    
+    Sockets.emit('subscribe',{topic:'Arduino/temp'});
+    Sockets.on('mqtt', function (msg) {
+            console.log(msg.topic+' '+msg.payload);
+            $scope.arduinotemperature = msg.payload;
+    });
+        
+})
 
 .controller('lightControlCtrl', function($scope, Sockets, MqttSocket) {
     
@@ -62,11 +74,27 @@ angular.module('starter.controllers', [])
              $scope.hallModel = false
          }
          
+         
+        Sockets.emit('publish', {topic:"light/hall",payload:JSON.stringify({
+            name:'hall',
+            type:'light',
+            value: $scope.hallModel
+        })
+        });
+        
+        Sockets.on('mqtt', function (msg) {
+            console.log(msg.topic+' '+msg.payload);
+            
+        })
+        // Sockets.emit('subscribe',{topic:'light/hall'});
+        
+        /*
         Sockets.emit('LightHall', {
             name: "Hall",
             type: "Light",
             value: $scope.hallModel
-        }); 
+        });
+        */
         
         // MqttSocket.publish('home/config',$scope.hallModel, function(){
         //     console.log('mqtt message published');
@@ -81,12 +109,16 @@ angular.module('starter.controllers', [])
              $scope.kitchenModel = false
          }
          
+        Sockets.emit('publish', {topic:"light/kitchen",payload:$scope.kitchenModel});
+        
+        /*
         Sockets.emit('LightKitchen', {
             name: 'Kitchen',
             type: 'light',
             value: $scope.kitchenModel
             
         }); 
+        */
     };
     
      // 3 function executed when toggle hall button is clicked//////////////////////////////////
@@ -204,6 +236,8 @@ function Quantity(numOfPcs) {
         qty = val * 12;
     });
 }
+
+
 
 // function Toggle(type){
 //   if (null == type || 0 == type.length) {

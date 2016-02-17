@@ -62,8 +62,6 @@ angular.module('starter.services', [])
 
   var myIoSocket = io.connect("https://ionicapptest-mstoklos.c9users.io", {
       transports: ['websocket'],
-  }, function(){
-    console.log('socket connected -sfactory');
   });
 
   var mySocket = socketFactory({
