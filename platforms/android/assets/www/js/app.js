@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'ngSanitize','starter.controllers', 'starter.services','btford.socket-io'])
+var app = angular.module('starter', [ 'ionic', 'ngSanitize','starter.controllers','starter.services','btford.socket-io'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,6 +20,7 @@ var app = angular.module('starter', ['ionic', 'ngSanitize','starter.controllers'
     }
   });
 })
+
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -83,6 +84,16 @@ var app = angular.module('starter', ['ionic', 'ngSanitize','starter.controllers'
         'tab-light': {
           templateUrl: 'templates/tab-light.html',
           controller: 'lightControlCtrl'
+        }
+      }
+    })
+    
+     .state('tab.temp', {
+      url: '/temp',
+      views: {
+        'tab-temp': {
+          templateUrl: 'templates/tab-temp.html',
+          //controller: 'lightControlCtrl'
         }
       }
     });

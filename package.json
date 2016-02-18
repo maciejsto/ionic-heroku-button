@@ -28,5 +28,9 @@
   "bugs": {
     "url": "https://github.com/maciejsto/ionic-heroku-button/issues"
   },
-  "homepage": "https://github.com/maciejsto/ionic-heroku-button#readme"
+  "homepage": "https://github.com/maciejsto/ionic-heroku-button#readme",
+  "cordovaPlugins": [],
+  "cordovaPlatforms": [
+    "android"
+  ]
 }

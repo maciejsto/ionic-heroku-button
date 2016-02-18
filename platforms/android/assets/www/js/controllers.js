@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope, Sockets) {
     Sockets.emit('message',{data: "hi node server :)"})
     console.log('dash-controller - TODO...')
 })
@@ -10,30 +10,47 @@ angular.module('starter.controllers', [])
   $scope.friends = Friends.all();
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
+.controller('FriendDetailCtrl', function($scope, $stateParams, Friends, Sockets) {
     Sockets.emit('message',{data: "hi node server :)"})
   console.log('friend-cotroller - TODO...')
   $scope.friend = Friends.get($stateParams.friendId);
   
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, Sockets) {
     Sockets.emit('message',{data: "hi node server :)"})
     console.log('account-controller - TODO...')
 })
 
-
-
+.controller('TempCtrl', function($scope, Sockets) {
+    
+    console.log('temp-controller - TODO...')
+    $scope.arduinotemperature = "";
+    $scope.arduinohumidity    = "";
+    $scope.arduinolightsensor = "";
+    
+    Sockets.emit('subscribe',{topic:'Arduino/temp'});
+    Sockets.on('mqtt', function (msg) {
+            console.log(msg.topic+' '+msg.payload);
+            $scope.arduinotemperature = msg.payload;
+    });
+        
+})
 
 .controller('lightControlCtrl', function($scope, Sockets, MqttSocket) {
     
     var num = 0.0;
+    
     
     $scope.hallModel       = false;
     $scope.kitchenModel    = false;
     $scope.bedRoomModel    = false;
     $scope.livingRoomModel = false;
     $scope.bathRoomModel   = false;
+    
+    
+    
+    
     
     $scope.hallSliderQty       = setQuantity(12);
     $scope.kitchenSliderQty    = setQuantity(30);
@@ -43,8 +60,8 @@ angular.module('starter.controllers', [])
     
     $scope.num = num;
     
-    var toggle = new Toggle('toggle');
-    var toggleHall = new ToggleHall('hall');
+    // var toggle = new Toggle('toggle');
+    // var toggleHall = new ToggleHall('hall');
     
     
     // 1 function executed when toggle hall button is clicked /////////////////////////////////////
@@ -56,11 +73,43 @@ angular.module('starter.controllers', [])
          }else{
              $scope.hallModel = false
          }
+         
+
+         
+        Sockets.emit('publish', {topic:"light/hall",payload:JSON.stringify({
+            name:'hall',
+            type:'light',
+            value: $scope.hallModel
+        })
+        });
+        
+        Sockets.on('mqtt', function (msg) {
+            console.log(msg.topic+' '+msg.payload);
+            
+        })
+        // Sockets.emit('subscribe',{topic:'light/hall'});
+        
+        /*
+=======
+         Sockets.emit('publish', { topic: "led", payload: $scope.hallMode });
+         Sockets.on('mqtt', function (msg) {
+             console.log(msg.topic + ' ' + msg.payload);
+         })
+         Sockets.emit('subscribe', { topic: 'led' });
+
+        /*
+
+>>>>>>> Stashed changes
         Sockets.emit('LightHall', {
             name: "Hall",
             type: "Light",
             value: $scope.hallModel
-        }); 
+        });
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
+        */
         
         // MqttSocket.publish('home/config',$scope.hallModel, function(){
         //     console.log('mqtt message published');
@@ -75,12 +124,16 @@ angular.module('starter.controllers', [])
              $scope.kitchenModel = false
          }
          
+        Sockets.emit('publish', {topic:"light/kitchen",payload:$scope.kitchenModel});
+        
+        /*
         Sockets.emit('LightKitchen', {
             name: 'Kitchen',
             type: 'light',
             value: $scope.kitchenModel
             
         }); 
+        */
     };
     
      // 3 function executed when toggle hall button is clicked//////////////////////////////////
@@ -199,27 +252,29 @@ function Quantity(numOfPcs) {
     });
 }
 
-function Toggle(type){
-  if (null == type || 0 == type.length) {
-      console.log('could not create object');
-      return;
-  }
-  this.type = type;
-  this.toString = function(){
-      console.log('toggle type is: ' + this.type);
-  }
-  
-};
-Toggle.prototype.toggleButton = function(){
-    console.log('toggle button');
-}
 
-function ToggleHall(name){
-    Toggle.call(this, name);
-}
-ToggleHall.prototype.toggleButton = function(){
-    console.log('toggle hall button');
-}
+
+// function Toggle(type){
+//   if (null == type || 0 == type.length) {
+//       console.log('could not create object');
+//       return;
+//   }
+//   this.type = type;
+//   this.toString = function(){
+//       console.log('toggle type is: ' + this.type);
+//   }
+  
+// };
+// Toggle.prototype.toggleButton = function(){
+//     console.log('toggle button');
+// }
+
+// function ToggleHall(name){
+//     Toggle.call(this, name);
+// }
+// ToggleHall.prototype.toggleButton = function(){
+//     console.log('toggle hall button');
+// }
 
 
 
@@ -235,7 +290,5 @@ ToggleHall.prototype.toggleButton = function(){
 //     toggle: toggle,
 //   }
 // }
-
-
 
 

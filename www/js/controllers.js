@@ -74,6 +74,7 @@ angular.module('starter.controllers', [])
              $scope.hallModel = false
          }
          
+
          
         Sockets.emit('publish', {topic:"light/hall",payload:JSON.stringify({
             name:'hall',
@@ -89,11 +90,25 @@ angular.module('starter.controllers', [])
         // Sockets.emit('subscribe',{topic:'light/hall'});
         
         /*
+=======
+         Sockets.emit('publish', { topic: "led", payload: $scope.hallMode });
+         Sockets.on('mqtt', function (msg) {
+             console.log(msg.topic + ' ' + msg.payload);
+         })
+         Sockets.emit('subscribe', { topic: 'led' });
+
+        /*
+
+>>>>>>> Stashed changes
         Sockets.emit('LightHall', {
             name: "Hall",
             type: "Light",
             value: $scope.hallModel
         });
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
         */
         
         // MqttSocket.publish('home/config',$scope.hallModel, function(){
