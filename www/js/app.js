@@ -100,10 +100,13 @@ var app = angular.module('starter', [
       views: {
         'tab-temp': {
           templateUrl: 'templates/tab-temp.html',
-          //controller: 'lightControlCtrl'
+          controller: 'temperatureCtrl',
+          controllerAs: 'tempCtrl'
         }
       }
     });
+    
+    
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
