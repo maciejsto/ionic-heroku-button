@@ -22,17 +22,18 @@ angular.module('starter.controllers', [])
     console.log('account-controller - TODO...')
 })
 
-.controller('TempCtrl', function($scope, Sockets) {
+.controller('temperatureCtrl', function($scope, Sockets) {
     
-    console.log('temp-controller - TODO...')
-    $scope.arduinotemperature = "";
-    $scope.arduinohumidity    = "";
-    $scope.arduinolightsensor = "";
+    var vm = this;
+    vm.arduinotemperature = 0;
+    vm.arduinohumidity    = "";
+    vm.arduinolightsensor = "";
     
     Sockets.emit('subscribe',{topic:'Arduino/temp'});
     Sockets.on('mqtt', function (msg) {
             console.log(msg.topic+' '+msg.payload);
-            $scope.arduinotemperature = msg.payload;
+            vm.arduinotemperature = msg.payload;
+            
     });
         
 })

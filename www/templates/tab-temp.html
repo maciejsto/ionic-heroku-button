@@ -1,26 +1,39 @@
-<ion-view title="Dashboard" ng-controller="TempCtrl">
+<ion-view title="Dashboard" ng-controller="temperatureCtrl as tempCtrl">
   <ion-content class="padding">
     
+    
+  <div class="list">
+    
     <!--TEMPERATURE-->
-    <h1>Arduino Temperature Sensor</h1>
-      <ion-item ng-update>
-        <p>The temperature now is</p> 
-        <span class ="large"><h1>{{arduinotemperature}} C</h1></span>
-         
-      </ion-item>
+    <div class="item item-divider">
+      <h2>Arduino Temperature Sensor</h2>
+    </div>
+    <ion-item ng-update>
+      <p>The temperature now is:</p> 
+        <span class ="large"><h1> {{ tempCtrl.arduinotemperature }}  °C</h1></span>
+    </ion-item>
+      
+      
      <!--HUMIDITY-->
-    <h1>Arduino Humidity Sensor</h1>
-      <ion-item ng-update>
-        <p>The temperature now is</p> 
-          <span class="large">Humidity: {{arduinohumidity}} 50 % </span>
-      </ion-item>
+    <div class="item item-divider">
+      <h2>Arduino Humidity Sensor</h2>
+    </div>
+    <ion-item ng-update>
+      <p>The humidity now is:</p> 
+        <span class="large"> <h1> {{ tempCtrlarduinohumidity }} 50 % </h1></span>
+    </ion-item>
+    
     
       <!--LIGHT SENSOR-->
-    <h1>Arduino Light Sensor</h1>
-      <ion-item ng-update>
-        <p>The temperature now is</p> 
-          <span class="large">Light Sensor: {{arduinolightsensor}} 90 % </span>
-      </ion-item>
+    <div class="item item-divider">
+      <h2>Arduino Light Sensor</h2>
+    </div>
+    <ion-item ng-update>
+      <p>The light intensity now is:</p> 
+        <span class="large"><h1> {{ tempCtrl.arduinolightsensor }} 90 % </h1></span>
+    </ion-item>
       
+  </div>  
+  
   </ion-content>
 </ion-view>
