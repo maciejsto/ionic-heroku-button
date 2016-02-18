@@ -25,7 +25,7 @@ angular.module('starter.controllers', [])
 .controller('TempCtrl', function($scope, Sockets) {
     
     console.log('temp-controller - TODO...')
-    $scope.arduinotemperature = "";
+    $scope.arduinotemperature = 0;
     $scope.arduinohumidity    = "";
     $scope.arduinolightsensor = "";
     
