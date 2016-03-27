@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express'),
     app = express(),
     http = require('http'),
@@ -87,19 +88,50 @@ serialport.open(function (err) {
 
 // // Create a client connection
 var client = mqtt.connect('mqtt://unnrixva:xmcM9mRlT34Y@m20.cloudmqtt.com:13512');
+var mqtt_clients = [];
 
-client.on('connect', () => { // When connected
+client.on('connect', (mqtt) => { // When connected
+
+    mqtt_clients.push(mqtt);
     console.log('mqtt client connected');
 
      
      client.subscribe('light/hall', ()=>{
          console.log('client subscribed to light/hall');
-     });  
+     });
+     
      client.subscribe('light/kitchen', ()=>{
          console.log('client subscribed to light/kitchen');
      });
-     //TODO subscibe to other topics
      
+     client.subscribe('light/bedRoom', ()=>{
+         console.log('client subscribed to light/bedRoom');
+     });
+     
+     client.subscribe('light/bathRoom', ()=>{
+         console.log('client subscribed to light/bathRoom');
+     });
+     
+     client.subscribe('light/livingRoom', ()=>{
+         console.log('client subscribed to light/livingRoom');
+     });
+     
+     client.subscribe('light/hallSlider', ()=>{
+        console.log('client subscribed to light/hallSlider'); 
+     });
+     //TODO subscibe to other topics
+     client.subscribe('light/kitchenSlider', ()=>{
+        console.log('client subscribed to light/kitchenSlider'); 
+     });
+     client.subscribe('light/bedRoomSlider', ()=>{
+        console.log('client subscribed to light/bedRoomSlider'); 
+     });
+     client.subscribe('light/bathRoomSlider', ()=>{
+        console.log('client subscribed to light/bathRoomSlider'); 
+     });
+     client.subscribe('light/livingRoomSlider', ()=>{
+        console.log('client subscribed to light/livingRoomSlider'); 
+     });
      
 });
 
@@ -126,12 +158,38 @@ client.on('connect', () => { // When connected
 
 /////////////////////////////// SOCKT IO //////////////////////         
 // var connections = new Array; // or better use [] ?
-var connections = [];
-                      
+var socket_clients = [];
+                     
 // io.sockets.on('connection', function (socket) {                      
 io.on('connection', function (socket) {
     
-    console.log('socket client connected');
+    socket_clients.push(socket);
+    
+    var socketId = socket.id;
+  var clientIp = socket.request.connection.remoteAddress;
+
+  console.log(clientIp);
+  
+    
+    console.log('socket client connected %s %s', socket.id, clientIp);
+    
+        // Server Side
+    socket.on('setNickname', function (name) {
+        socket.set('nickname', name, function () {
+            socket.emit('ready');
+        });
+    });
+        // Server Side
+    socket.on('nickname', function (name) {
+        console.log('-----------------',name)
+    });
+    
+    socket.on('msg', function () {
+        socket.get('nickname', function (err, name) {
+            console.log('Chat message by ', name);
+        });
+    });
+    
     // socket connection indicates what mqtt topic to subscribe to in data.topic
     socket.on('subscribe', function(data){
        console.log('Subscribing to ' + data.topic);
@@ -210,7 +268,7 @@ io.on('connection', function (socket) {
     })
     */
     
-    setInterval(function () {
+    var interval = setInterval(function () {
         if (DEBUG){
             console.log('publishing to Arduino/temp')
         } 
@@ -221,6 +279,15 @@ io.on('connection', function (socket) {
          //socket.emit('server:msg', {data: random(20,30)});
         
     }, 5000);
+    
+    
+    socket.on('disconnect', function() { 
+        console.log(socket.id + ' disconnected');
+        //remove user from db
+        clearInterval(interval);
+        
+    });
+    
 });
 
 
@@ -243,8 +310,45 @@ client.on('message', function (topic, payload, packet) {
                             
 });
 
+class Polygon {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+  
+  get area() {
+    return function(){  
+        return this.calcArea();
+    };
+    }
+  
+
+  calcArea() {
+    return this.height * this.width;
+  }
+}
+
+class Animal { 
+  constructor(name) {
+    this.name = name;
+  }
+  
+  speak() {
+    console.log(this.name + ' makes a noise.');
+  }
+}
+
+class Dog extends Animal {
+  speak() {
+    console.log(this.name + ' barks.');
+  }
+}
 
 
+var p = new Polygon(1,1);
+var a = new Dog("rubin");
+console.log(p.area());
+console.log(a.speak());
 
 ///////////////////////////// SERVER ///////////////////////////////
 
@@ -254,6 +358,7 @@ server.listen(process.env.PORT, process.env.IP, function(){
 // app.listen(app.get('port'), function () {
 //     console.log('Express server listening on port ' + app.get('port'));
 // });
+
 
 
 
