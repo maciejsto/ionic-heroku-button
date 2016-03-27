@@ -132,7 +132,7 @@ client.on('connect', (mqtt) => { // When connected
      client.subscribe('light/livingRoomSlider', ()=>{
         console.log('client subscribed to light/livingRoomSlider'); 
      });
-     
+     //comment
 });
 
 //   // publish a message to a topic
