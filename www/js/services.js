@@ -67,6 +67,7 @@ angular.module('starter.services', [])
   var mySocket = socketFactory({
     ioSocket: myIoSocket
   });
+  
 
   return mySocket;
 

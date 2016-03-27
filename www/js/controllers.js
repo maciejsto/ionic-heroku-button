@@ -1,3 +1,4 @@
+"use strict";
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, Sockets) {
@@ -22,13 +23,15 @@ angular.module('starter.controllers', [])
     console.log('account-controller - TODO...')
 })
 
-.controller('temperatureCtrl', function($scope, Sockets) {
+.controller('temperatureCtrl', function($scope,$sanitize, Sockets) {
     
     var vm = this;
+    
     vm.arduinotemperature = 0;
     vm.arduinohumidity    = "";
     vm.arduinolightsensor = "";
     
+   
     Sockets.emit('subscribe',{topic:'Arduino/temp'});
     Sockets.on('mqtt', function (msg) {
             console.log(msg.topic+' '+msg.payload);
@@ -77,12 +80,12 @@ angular.module('starter.controllers', [])
          
 
          
-        Sockets.emit('publish', {topic:"light/hall",payload:JSON.stringify({
-            name:'hall',
-            type:'light',
-            value: $scope.hallModel
-        })
-        });
+        Sockets.emit('publish', {topic:"light/hall",payload: $scope.hallModel});//JSON.stringify({
+            //name:'hall',
+            //type:'light',
+            //value: $scope.hallModel
+        //})
+        //});
         
         Sockets.on('mqtt', function (msg) {
             console.log(msg.topic+' '+msg.payload);
@@ -144,12 +147,17 @@ angular.module('starter.controllers', [])
          }else{
              $scope.bedRoomModel = false
          }
+        
+         Sockets.emit('publish', {topic:"light/bedRoom",payload:$scope.bedRoomModel}); 
+        /* 
+        
         Sockets.emit('LightBedRoom', {
             name: 'bedRoom',
             type: 'light',
             value: $scope.bedRoomModel
             
-        }); 
+        });
+        */
     };
      // 4 function executed when toggle hall button is clicked//////////////////////////////////
     $scope.toggleLivingRoom = function(){
@@ -158,12 +166,16 @@ angular.module('starter.controllers', [])
          }else{
              $scope.livingRoomModel = false
          }
+          Sockets.emit('publish', {topic:"light/livingRoom",payload:$scope.livingRoomModel});
+          
+          /*
         Sockets.emit('LightLivingRoom', {
             name: 'livingRoom',
             type: 'light',
             value: $scope.livingRoomModel
             
         }); 
+        */
     };
      // 5 function executed when toggle hall button is clicked//////////////////////////////////
     $scope.toggleBathRoom = function(){
@@ -172,55 +184,89 @@ angular.module('starter.controllers', [])
          }else{
              $scope.bathRoomModel = false
          }
+         
+          Sockets.emit('publish', {topic:"light/bathRoom",payload:$scope.bathRoomModel});
+          
+          /*
         Sockets.emit('LightBathRoom', {
             name: 'bathRoom',
             type: 'light',
             value: $scope.bathRoomModel
             
         }); 
+        */
     };
     // $scope.toggleKitchen = new ToggleLight('kitchen');
     
     $scope.HallRangeSlider = function(){
-        Sockets.emit('hallSlider', {
-          name: 'hallSlider',
-          type: 'slider',
-          value:$scope.hallSliderQty.qty
-        });
+        
+        //  Sockets.emit('publish', {topic:"light/hallSlider",payload:JSON.stringify({
+        //     name:'hallSlider',
+        //     type:'slider',
+        //     value: $scope.hallSliderQty.qty
+        // })
+        // });
+         Sockets.emit('publish', {topic:"light/hallSlider",payload:$scope.hallSliderQty.qty});
+        
+        
+        
+        // Sockets.emit('hallSlider', {
+        //   name: 'hallSlider',
+        //   type: 'slider',
+        //   value:$scope.hallSliderQty.qty
+        // });
     };
     
     $scope.KitchenRangeSlider = function(){
+        
+        Sockets.emit('publish', {topic:"light/kitchenSlider",payload:$scope.kitchenSliderQty.qty});
+        /*
       Sockets.emit('kitchenSlider', {
         name: 'kitchenSlider',
         type: 'slider',
         value:$scope.kitchenSliderQty.qty
         
       });
+      */
     };
     
     $scope.BedRoomRangeSlider = function(){
+        
+        Sockets.emit('publish', {topic:"light/bedRoomSlider",payload:$scope.bedRoomSliderQty.qty});
+        /*
       Sockets.emit('bedRoomSlider', {
         name: 'bedRoomSlider',
         type: 'slider',
         value:$scope.bedRoomSliderQty.qty
       });
+      */
     };
     
     $scope.LivingRoomRangeSlider = function(){
+        
+        Sockets.emit('publish', {topic:"light/livingRoomSlider",payload:$scope.livingRoomSliderQty.qty});
+        
+        /*
       Sockets.emit('livingRoomSlider', {
         name: 'livingRoomSlider',
         type: 'slider',
         value:$scope.livingRoomSliderQty.qty
       });
+      */
     };
     
     $scope.BathRoomRangeSlider = function(){
+        
+        Sockets.emit('publish', {topic:"light/bathRoomSlider",payload:$scope.bathRoomSliderQty.qty});
+        
+        /*
       Sockets.emit('bathRoomSlider', {
         name: 'bathRoomSlider',
         type: 'slider',
         value:$scope.bathRoomSliderQty.qty
         
       });
+      */
     };
     
     //private function
@@ -252,6 +298,7 @@ function Quantity(numOfPcs) {
         qty = val * 12;
     });
 }
+
 
 
 
